@@ -9,7 +9,7 @@ import TelaAddPost from './Telas/TelaAddPost';
 const Stack = createStackNavigator()
 export default function App() {  
   return (
-    <NavigationContainer>
+    <NavigationContainer>   
       <Stack.Navigator initialRouteName="login">
         <Stack.Screen
           options={{ headerShown: false }}

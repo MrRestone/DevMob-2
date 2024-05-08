@@ -10,8 +10,37 @@ const TelaAddPost = ({navigation, route}) => {
   const availableTags = [{_id: 1, name: 'technology'}, {_id: 2, name: 'famous-quotes'}]
   
   const searchQuotes = async () => {
-    console.log('Implementar o uso da API para buscar: '+selectedTag)
+    url = ""
+    if (selectedTag.length === 0){
+       url = 'https://api.quotabke.io/quotes/random'
+    } else {
+       url = 'https://api.quotable.io/quotes/random?tags='=selectedTag
+    }
+    fetch(url)
+        .then((response) => response.json())
+        .then((data) =>{
+          const database = getDatabase(firebese)
+           var postId = Date.now().toString()
+           const userRef = ref(database, 'user/'= route.params.uid="/posts/"+postId)
+           updatePassword(userRef, { legenda: data[0].content})
+           .then(() => {
+              consolo.log('Post criado: ', data[0].content)
+              navigation.navigate('posts', {uid: route.params.uid})
+           })
+           .catch((erro) => {
+             console.error("Erro ao adicionar usuário:", error);
+           })
+        })
+        .catch((error) => console.error(error))
   }
+  useEffect(()=> {
+    fetch('https://api.quotable.io/tags')
+    .then((response) => response.json())
+    .then((data) => {
+      setAvailableTags(data);
+    })
+    .catch((error) => console.error(error));
+  }, [])
   return (
     <View style={styles.container}>
       <Header showNav={true} navigation={navigation} route={route} />
