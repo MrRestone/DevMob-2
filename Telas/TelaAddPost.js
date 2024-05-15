@@ -7,8 +7,8 @@ import {Picker} from '@react-native-picker/picker'
 
 const TelaAddPost = ({navigation, route}) => {
   const [selectedTag, setSelectedTag] = useState('')
-  const availableTags = [{_id: 1, name: 'technology'}, {_id: 2, name: 'famous-quotes'}]
-  
+  const [availableTags, setAvailableTags] = useState([])
+  const image = route.params.image ? route.params.image : null
   const searchQuotes = async () => {
     url = ""
     if (selectedTag.length === 0){
@@ -44,8 +44,12 @@ const TelaAddPost = ({navigation, route}) => {
   return (
     <View style={styles.container}>
       <Header showNav={true} navigation={navigation} route={route} />
+      {image ? <Image source={{ uri: image}} style={styles.image} /> : null}
       <View style={styles.contentContainer}>
-        <Text>Selecione a tag do seu post</Text>
+        <Button
+          onPress={() => {navigation.navigate('camera', {uid: route.params.uid})}}
+          title="Tirar Foto"
+        /> 
         <Picker
           selectedValue={selectedTag}
           onValueChange={(itemValue, itemIndex) => setSelectedTag(itemValue)}
@@ -59,6 +63,7 @@ const TelaAddPost = ({navigation, route}) => {
         <Button
           onPress={searchQuotes}
           title="Gerar post"
+          color="grey"
         />
       </View>
     </View>
@@ -67,7 +72,7 @@ const TelaAddPost = ({navigation, route}) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 0.7,
+    flex: 1,
   },
   contentContainer: {
     flex: 1,
@@ -79,6 +84,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 12
   },
+  image: {
+    flex:1,
+    resizeMode: 'contain'
+  }
 });
 
 export default TelaAddPost;

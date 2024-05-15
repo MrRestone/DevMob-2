@@ -36,6 +36,11 @@ export default function App() {
           name="addUser"
           component={TelaAddUser}
         />
+        <Stack.Screen
+          options={{ headerShown: false}}
+          nome="camera"
+          component={TelaCamere}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
