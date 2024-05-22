@@ -1,7 +1,10 @@
 import React, {useState, usEffect} from 'react';
 import { StyleSheet, Text, View, button, Image, Button } from 'react-native';
 import { Camera } from 'expo-camera';
-function TelaCamere({natigation, route}) {
+import Header from '../Componentes/Header';
+
+function TelaCamere({navigation, route}) {
+
     const [hasPermission, setHasPermission] = useState(null)
     const [camera, setCamera] = useState(null);
     const [image, setImage] = useState(null);
@@ -13,18 +16,32 @@ function TelaCamere({natigation, route}) {
             setHasPermission(status === 'granted')
         }) ();
     },[route.params]);
+
     const takePicture = async () => {
-        if(camere){
+        if(camera){
             const data = await camera.tekePictureAsync(null)
             setImage(data)
         }
     }
+    const switcCamera = () => {
+        setType(type === Camera.constants.Type.back ?
+                                Camera.constants.Type.front : Camera.Constants.type.back
+        )
+    }
+    if(!hasPermission){
+        return(
+            <View style={styles.container}>
+                <Text>Permissão da câmera negado!</Text>
+            </View>
+        )
+    }
     return (
-        <View style={styleSheet.container}>
-            {hasPermission ? (
-                <View style={styles.cameraContainer}>
+        <View style={stylet.container}>
+            <View style={styles.header}>
+                    <Header showNav={false}/>
+                </View>
                     {image ? (
-                      <View style={styles.container}>  
+                      <View style={styles.container2}>  
                         <Image source={{ uri: image.uri}} Style={styles.image}/>
                         <Button
                             color='gray'
@@ -34,7 +51,6 @@ function TelaCamere({natigation, route}) {
                             }}
                         />    
                         <Button 
-                        color='grey'
                         title="user essa foto"
                         onPress={() => {
                             navigation.navigate('addPost', {uid: route.params.uid, image: image.uri})
@@ -42,35 +58,25 @@ function TelaCamere({natigation, route}) {
                        /> 
                        </View>
                     ) : (
+                    <View style={styles.container2}>
                         <Camera
                             ref={(ref) => setCamera(ref)}
                             style={styles.camera}
                             type={type}
-                            ratio='1:1'
-                        />    
+                        >  
+                            <View style={styles.BotoesCamera}>
+                                <Pressble onPress={() => {switchCamera()}}>
+                                    <Image source={require('../assets/changeCamera.png')} resizeMode="contain" />
+                                </Pressble>  
+                                <Pressble onPress= {() =>{takePicture()}}>
+                                    <Image source={require('../assets/camera.png')} resizeMode ="contain"/>
+                                </Pressble>
+                            </View>
+                        </Camera>
+                    </View>
                     )}
-                    </View>
-            ) : (
-                <Text>Permissão da câmera negada!</Text>
-            )}
-            {!image &&(
-                <View>
-                    <Button
-                        color='grey'
-                        title="trcar Câmera"
-                        onPress={() => {
-                            setType(
-                                type === Camera.Constants.Type.back
-                                ? Camera.Constants.type.front
-                                : Camera.Constants.Type.back
-                        );
-                        }}
-                    /> 
-                    <Button title="Tirar Foto" onPress={() => takePicture()}/>   
-                    </View>
-                )}
-        </View>
-    )
+                </View>
+            )
 } 
 const styles = StyleSheet.create({
     container: {

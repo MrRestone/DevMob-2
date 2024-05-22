@@ -28,7 +28,19 @@ const TelaMeusPosts = ({ navigation, route }) => {
     }, [route.params])
 
   const deletePost = (postId) => {
-    const postRef = ref(database, 'users/'+route.params.uid+'/posts/'+postId);
+    const postRef = ref(database, 'users/'+route.params.uid+'/posts/'+postId)
+    const imageRef = storageRef(storage,'images/'+ postId !== postId)
+    remove(postId)
+      .then(() => { 
+        const novosPosts = posts.filter((post) => post.postId !== postId)
+        setPosts(novosPosts)
+    if(foto) {
+      deleteObject(imageRef)
+        .catch((err) => {
+          consolo.error("Erro ao deletar imagem:"+ err)
+        })
+      }
+    })
     remove(postRef)
       .then(() => {
         const novosPosts = posts.filter((post) => post.postId !== postId);
@@ -50,11 +62,14 @@ const TelaMeusPosts = ({ navigation, route }) => {
           data={posts}
           keyExtractor={(item) => item.postId}
           renderItem={({ item }) => (
-            <View style={styles.postContainer}>
+            <View style={{postContainer: 10}}>
+              {item.foto && (<Image source={{uri: item.foto}} style={styles.foto}/>)}
+              <View style={styles.postContainer}>
               <Text style={styles.container}>{item.legenda}</Text>
               <Pressable onPress={() => deletePost(item.postId)}>
                 <Image source={require('../assets/trash.png')}  resizeMode="contain" style={styles.image} />
             </Pressable>
+            </View>
             </View>
           )}
         />
@@ -84,6 +99,11 @@ const styles = StyleSheet.create({
   image: {
     width:48,
     height: 24
+  },
+  foto: {
+    alignSelf: 'center',
+    width:'80%',
+    aspectRatio: 1
   }
 });
 
