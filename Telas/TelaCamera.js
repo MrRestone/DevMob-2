@@ -1,32 +1,26 @@
-import React, {useState, usEffect} from 'react';
-import { StyleSheet, Text, View, button, Image, Button } from 'react-native';
-import { Camera } from 'expo-camera';
+import React, {useState, useEffect} from 'react';
+import { StyleSheet, Text, View, Image, Button } from 'react-native';
+import { CameraView } from 'expo-camera';
 import Header from '../Componentes/Header';
 
 function TelaCamera({navigation, route}) {
 
     const [hasPermission, setHasPermission] = useState(null)
     const [camera, setCamera] = useState(null);
-    const [image, setImage] = useState(null);
-    const [type, setType] = useState(Camera.constants.type.back)
+    const [Image, setImage] = useState(null);
 
     useEffect(() => {
         (async () => {
-            const{ status } = await Camera.requestCameraPermissionsAsync();
+            const{ status } = await CameraView.requestCameraPermissionsAsync();
             setHasPermission(status === 'granted')
         }) ();
-    },[route.params]);
+    },[]);
 
     const takePicture = async () => {
         if(camera){
             const data = await camera.tekePictureAsync(null)
             setImage(data)
         }
-    }
-    const switcCamera = () => {
-        setType(type === Camera.constants.Type.back ?
-                                Camera.constants.Type.front : Camera.Constants.type.back
-        )
     }
     if(!hasPermission){
         return(
@@ -36,13 +30,13 @@ function TelaCamera({navigation, route}) {
         )
     }
     return (
-        <View style={stylet.container}>
+        <View style={styles.container}>
             <View style={styles.header}>
                     <Header showNav={false}/>
                 </View>
-                    {image ? (
-                      <View style={styles.container2}>  
-                        <Image source={{ uri: image.uri}} Style={styles.image}/>
+                    {Image ? (
+                      <View style={styles.container}>  
+                        <Image source={{ uri: Image.uri}} Style={styles.image}/>
                         <Button
                             color='gray'
                             title="Tirar nova foto"
@@ -58,8 +52,8 @@ function TelaCamera({navigation, route}) {
                        /> 
                        </View>
                     ) : (
-                    <View style={styles.container2}>
-                        <Camera
+                    <View style={styles.container}>
+                        <CameraView
                             ref={(ref) => setCamera(ref)}
                             style={styles.camera}
                             type={type}
@@ -72,12 +66,11 @@ function TelaCamera({navigation, route}) {
                                     <Image source={require('../assets/camera.png')} resizeMode ="contain"/>
                                 </Pressble>
                             </View>
-                        </Camera>
+                        </CameraView>
                     </View>
                     )}
                 </View>
-            )
-} 
+            )}
 const styles = StyleSheet.create({
     container: {
         flex: 1,

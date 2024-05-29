@@ -21,7 +21,7 @@ export default function App() {
         <Stack.Screen 
           name="posts" 
           options={{ headerShown: false }}
-          component={TelaPosts}  
+          component={TelaPosts}
         />
         <Stack.Screen 
           name="meusPosts" 
@@ -40,11 +40,11 @@ export default function App() {
         />
         <Stack.Screen
           options={{ headerShown: false}}
-          nome="camera"
+          name="camera"
           component={TelaCamera}
         />
         <Stack.Screen
-          name = "localização"
+          name="localização"
           component={TelaLocalizacao}
           options={{headerShown: false}}
         />

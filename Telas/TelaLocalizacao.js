@@ -1,7 +1,7 @@
 import React from "react"
 import { View, StyleSheet, Text } from "react-native"
 import Header from "../Componentes/Header"
-import MapView, {Maker} from 'react-native-maps'
+import MapView, {Marker} from 'react-native-maps'
 
 const TelaLocalizacao = ({ navigation, route}) => {
     const location = route.params.post.geolocalizacao
@@ -40,7 +40,7 @@ const TelaLocalizacao = ({ navigation, route}) => {
    )
 }
 
-const styles = styleSheet.create({
+const styles = StyleSheet.create({
     container: {
         flex: 1
     },

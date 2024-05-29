@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Button } from 'react-native';
 import Header from '../Componentes/Header';
 import firebase from '../Servicos/firebase'
 import { getDatabase, ref, update } from "firebase/database"
-import { getDownloadURL, getStorege, ref as storageRef, uploadBytes } from 'firebase/storage';
+import { getDownloadURL, getStorage, ref as storageRef, uploadBytes } from 'firebase/storage';
 import {Picker} from '@react-native-picker/picker'
 import * as Location from 'expo-location'
 
@@ -18,7 +18,7 @@ const TelaAddPost = ({navigation, route}) => {
   const searchQuotes = async () => {
     url = ""
     if (selectedTag.length === 0){
-       url = 'https://api.quotabke.io/quotes/random'
+       url = 'https://api.quotable.io/quotes/random'
     } else {
        url = 'https://api.quotable.io/quotes/random?tags='+selectedTag
     }
