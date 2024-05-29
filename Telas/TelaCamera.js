@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, button, Image, Button } from 'react-native';
 import { Camera } from 'expo-camera';
 import Header from '../Componentes/Header';
 
-function TelaCamere({navigation, route}) {
+function TelaCamera({navigation, route}) {
 
     const [hasPermission, setHasPermission] = useState(null)
     const [camera, setCamera] = useState(null);
@@ -93,4 +93,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default TelaCamere 
+export default TelaCamera 

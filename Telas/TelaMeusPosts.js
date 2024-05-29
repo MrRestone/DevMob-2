@@ -66,7 +66,7 @@ const TelaMeusPosts = ({ navigation, route }) => {
               {item.foto && (<Image source={{uri: item.foto}} style={styles.foto}/>)}
               <View style={styles.postContainer}>
               <Text style={styles.container}>{item.legenda}</Text>
-              <Pressable onPress={() => deletePost(item.postId)}>
+              <Pressable onPress={() => deletePost(item.postId, item.foto)}>
                 <Image source={require('../assets/trash.png')}  resizeMode="contain" style={styles.image} />
             </Pressable>
             </View>

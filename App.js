@@ -5,6 +5,8 @@ import TelaAddUser from './Telas/TelaAddUser';
 import TelaPosts from './Telas/TelaPosts'
 import TelaMeusPosts from './Telas/TelaMeusPosts';
 import TelaAddPost from './Telas/TelaAddPost';
+import TelaCamera from './Telas/TelaCamera';
+import TelaLocalizacao from './Telas/TelaLocalizacao';
 
 const Stack = createStackNavigator()
 export default function App() {  
@@ -39,7 +41,12 @@ export default function App() {
         <Stack.Screen
           options={{ headerShown: false}}
           nome="camera"
-          component={TelaCamere}
+          component={TelaCamera}
+        />
+        <Stack.Screen
+          name = "localização"
+          component={TelaLocalizacao}
+          options={{headerShown: false}}
         />
       </Stack.Navigator>
     </NavigationContainer>
