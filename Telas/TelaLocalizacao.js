@@ -1,43 +1,44 @@
-import React from "react"
+import React from "react";
 import { View, StyleSheet, Text } from "react-native"
-import Header from "../Componentes/Header"
-import MapView, {Marker} from 'react-native-maps'
+import Header from "../Componentes/Header";
+import MapView, { Marker } from 'react-native-maps'
 
-const TelaLocalizacao = ({ navigation, route}) => {
+const TelaLocalizacao = ({ navigation, route }) => {
     const location = route.params.post.geolocalizacao
-    if(!location){
-        console.log("Erro: post não possui localização")
+    if(!location) {
+        console.log("Erro: Post não possui localização")
         return(<View style={styles.container}>
-                <Header showNav={true} navigation={navigation} route={route} />
-                <Text style={styles.fail}> Esse Post não possui localização</Text>
-        </View>)
+                    <Header showNav={true} navigation={navigation} route={route} />
+                    <Text style={styles.fail}>Esse Post não possui localização!</Text>
+               </View>)
     }
-    return ( <View>
+    return (
         <View style={styles.container}>
-            <Header shoNaw={true} navigation={navigation} route={route }/>
-        </View>
-        <View style={styles.container}>
-            <MapView
-            style={styles.map}
-            initialRegion={{
-                latitude: location.latitude,
-                longitude: location.longitude,
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421,
-            }}
-            >
-                <Marker 
-                coordinate={{
+            <View style={styles.header}>
+                <Header showNav={true} navigation={navigation} route={route} />
+            </View>
+            <View style={styles.container}>
+                <MapView
+                style={styles.map}
+                initialRegion={{
                     latitude: location.latitude,
                     longitude: location.longitude,
+                    latitudeDelta: 0.0922,
+                    longitudeDelta: 0.0421,
                 }}
-                titlr='Localização do post'
-                description={route.params.post.legenda}
-            />
-            </MapView>
-        </View>
-   </View> 
-   )
+                >
+                <Marker
+                    coordinate={{
+                    latitude: location.latitude,
+                    longitude: location.longitude,
+                    }}
+                    title="Localização do Post"
+                    description={route.params.post.legenda}
+                />
+                </MapView>
+            </View>
+        </View> 
+    )
 }
 
 const styles = StyleSheet.create({
@@ -49,12 +50,13 @@ const styles = StyleSheet.create({
     },
     map: {
         width: '100%',
-        height: '100%'
+        height: '100%',
     },
-    fail : {
-        color: 'Red',
+    fail: {
+        color: 'red',
         alignSelf: 'center',
         fontSize: 20
     }
 })
+
 export default TelaLocalizacao
