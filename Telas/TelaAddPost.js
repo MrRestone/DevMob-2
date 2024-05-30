@@ -37,7 +37,7 @@ const TelaAddPost = ({navigation, route}) => {
               imageUrl = await getDownloadURL(imageRef)
             }
              const userRef = ref(database, 'user/'+ route.params.uid+"/posts/"+postId)
-             update(userRef, { legenda: data[0].content, foto, imageUrl, geolocalizacao: location})
+             update(userRef, { legenda: data[0].content, foto:imageUrl, geolocalizacao: location})
              .then(() => {
                 consolo.log('Post criado: ', data[0].content)
                 setPostFailed(false)
