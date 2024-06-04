@@ -39,7 +39,7 @@ const TelaAddPost = ({navigation, route}) => {
              const userRef = ref(database, 'user/'+ route.params.uid+"/posts/"+postId)
              update(userRef, { legenda: data[0].content, foto:imageUrl, geolocalizacao: location})
              .then(() => {
-                consolo.log('Post criado: ', data[0].content)
+                console.log('Post criado: ', data[0].content)
                 setPostFailed(false)
                 navigation.navigate('posts', {uid: route.params.uid})
              })
